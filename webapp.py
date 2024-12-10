@@ -48,7 +48,7 @@ except Exception as e:
 
 #context processors run before templates are rendered and add variable(s) to the template's context
 #context processors must return a dictionary 
-#this context processor adds the variable logged_in to the conext for all templates
+#this context processor adds the variable logged_in to the conext for all template
 @app.context_processor
 def inject_logged_in():
     return {"logged_in":('github_token' in session)}
