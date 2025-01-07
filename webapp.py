@@ -37,7 +37,7 @@ CLIENT_SECRET_FILE = r'C:\Users\DSW\Desktop\DSW-final-project\client_secret.json
 # Set up Google as OAuth provider
 google = oauth.register(
     name='google',
-    CLIENT_SECRET_FILE = r'C:\Users\DSW\Desktop\DSW-final-project\client_secret.json',
+    CLIENT_SECRET_FILE = os.environ.get('CLIENT_SECRET_FILE_PATH', 'client_secret.json'),
     flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, scopes=['your_scopes_here']),
     client_id=os.environ['GOOGLE_CLIENT_ID'],  # Your Google Client ID
     client_secret=os.environ['GOOGLE_CLIENT_SECRET'],  # Your Google Client Secret
@@ -76,7 +76,7 @@ def login():
     # Create the OAuth flow object
     flow = InstalledAppFlow.from_client_secrets_file(
         CLIENT_SECRET_FILE, scopes=SCOPES)
-    flow.redirect_uri = url_for('callback', _external=True, _scheme='http')
+    flow.redirect_uri = url_for('callback', _external=True, _scheme='https')
     authorization_url, state = flow.authorization_url(
         access_type='offline',
         prompt='select_account')
