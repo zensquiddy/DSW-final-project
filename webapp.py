@@ -37,7 +37,7 @@ CLIENT_SECRET_FILE = os.path.join(os.path.dirname(__file__), 'client_secret.json
 # Set up Google as OAuth provider
 google = oauth.register(
     name='google',
-    CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
+    CLIENT_SECRET = os.environ.get('CLIENT_SECRET'),
     scopes = ['your_scopes_here'],
     flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET, scopes=['your_scopes_here']),
     client_id=os.environ['GOOGLE_CLIENT_ID'],  # Your Google Client ID
