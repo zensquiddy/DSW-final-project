@@ -39,7 +39,7 @@ google = oauth.register(
     name='google',
     CLIENT_SECRET = os.environ.get('CLIENT_SECRET'),
     scopes = ['your_scopes_here'],
-    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET, scopes=['your_scopes_here']),
+    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, scopes=['your_scopes_here']),
     client_id=os.environ['GOOGLE_CLIENT_ID'],  # Your Google Client ID
     client_secret=os.environ['GOOGLE_CLIENT_SECRET'],  # Your Google Client Secret
     access_token_url='https://accounts.google.com/o/oauth2/token',
