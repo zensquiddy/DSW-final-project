@@ -31,14 +31,15 @@ oauth = OAuth(app)
 load_dotenv()
 SCOPES = ["https://www.googleapis.com/auth/documents.readonly"]
 DOCUMENT_ID = "195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE"
-CLIENT_SECRET_FILE = r'C:\Users\DSW\Desktop\DSW-final-project\client_secret.json'
+CLIENT_SECRET_FILE = os.path.join(os.path.dirname(__file__), 'client_secret.json')
 
 
 # Set up Google as OAuth provider
 google = oauth.register(
     name='google',
-    CLIENT_SECRET_FILE = os.environ.get('CLIENT_SECRET_FILE_PATH', 'client_secret.json'),
-    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, scopes=['your_scopes_here']),
+    CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
+    scopes = ['your_scopes_here'],
+    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET, scopes=['your_scopes_here']),
     client_id=os.environ['GOOGLE_CLIENT_ID'],  # Your Google Client ID
     client_secret=os.environ['GOOGLE_CLIENT_SECRET'],  # Your Google Client Secret
     access_token_url='https://accounts.google.com/o/oauth2/token',
