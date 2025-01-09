@@ -148,9 +148,15 @@ def renderJobs():
 def renderMap():
     return render_template('page2.html')
 
+
 @app.route('/Info')
 def renderInfo():
     return render_template('Info.html')
+    
+    
+@app.route('/Library')
+def renderLibrary():
+    return render_template('SBPL.htm')
 
 if __name__ == '__main__':
     app.run()
