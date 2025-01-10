@@ -77,7 +77,7 @@ def login():
     # Create the OAuth flow object
     flow = InstalledAppFlow.from_client_secrets_file(
         CLIENT_SECRET_FILE, scopes=SCOPES)
-    flow.redirect_uri = url_for('callback', _external=True, _scheme='https')
+    flow.redirect_uri = url_for('callback', _external=True, _scheme='http')
     authorization_url, state = flow.authorization_url(
         access_type='offline',
         prompt='select_account')
@@ -157,6 +157,35 @@ def renderInfo():
 @app.route('/SBPL')
 def renderSBPL():
     return render_template('SBPL.html')
+    
+@app.route('/UnityS')
+def renderUnityS():
+    return render_template('UnityS.html')
+    
+@app.route('/WSBG')
+def renderWSBG():
+   return render_template('WSBG.html')
+   
+@app.route('/SBZ')
+def renderSBZ():
+    return render_template('SBZ.html')
+    
+@app.route('/FNC')
+def renderFNC():
+    return render_template('FNC.html')
+    
+@app.route('/CSW')
+def renderCSW():
+    return render_template('CSW.html')
+    
+    
+@app.route('/CNWH')
+def renderCNWH():
+    return render_template('CNWH.html')
+    
+@app.route('/HTEC')
+def renderHTEC():
+    return render_template('HTEC.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
