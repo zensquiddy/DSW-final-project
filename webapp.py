@@ -154,10 +154,10 @@ def renderInfo():
     return render_template('Info.html')
     
     
-@app.route('/Library')
-def renderLibrary():
-    return render_template('SBPL.htm')
+@app.route('/SBPL')
+def renderSBPL():
+    return render_template('SBPL.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
