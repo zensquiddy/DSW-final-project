@@ -4,6 +4,7 @@ from flask_apscheduler import APScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask_oauthlib.client import OAuth
 from bson.objectid import ObjectId
+from dotenv import load_dotenv
 
 import pprint
 import os
@@ -12,6 +13,7 @@ import pymongo
 import sys
  
 app = Flask(__name__)
+load_dotenv()
 
 app.debug = False #Change this to False for production
 #os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1' #Remove once done debugging
@@ -34,11 +36,20 @@ github = oauth.remote_app(
 )
 
 #Connect to database
-url = os.environ["MONGO_CONNECTION_STRING"]
-client = pymongo.MongoClient(url)
-db = client[os.environ["MONGO_DBNAME"]]
-collection = db['posts'] #TODO: put the name of the collection here
+connection_string = os.environ.get("MONGO_CONNECTION_STRING")
+client = pymongo.MongoClient(connection_string)
+db_name = os.environ["MONGO_DBNAME"]
 
+db = client[db_name]
+collection = db['Organizations']
+
+print(collection.find())
+for Colors in collection.find():
+        print(Colors)
+# List all databases to test connection
+
+
+#https://cloud.mongodb.com/v2/675b58a6db24f835738e3230#/metrics/replicaSet/675b5b9698f11f497345b560/explorer/Organizations/Santa%20Barbara%20Public%20Library%20/find
 # Send a ping to confirm a successful connection
 try:
     client.admin.command('ping')
@@ -55,6 +66,7 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
+    documents = list(collection.find())
     return render_template('home.html')
 
 #redirect to GitHub's OAuth page and confirm callback URL
@@ -98,11 +110,29 @@ def renderPage1():
 def renderPage2():
     return render_template('page2.html')
 
+
+@app.route('/document/<document_id>')
+def view_document(document_id):
+    # Fetch a specific document by its ID
+    document = collection.find_one({'_id': document_id})
+    return render_template('create_documentdocument.html', document=document)
+
+@app.route('/create', methods=['GET', 'POST'])
+def create_document():
+    if request.method == 'POST':
+        # Create a new document from form data
+        new_document = {
+            'title': request.form['title'],
+            'content': request.form['content']
+        }
+        collection.insert_one(new_document)
+        return redirect(url_for('index'))
+    return render_template('create_document.html')
+
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
 def get_github_oauth_token():
     return session['github_token']
-
 
 if __name__ == '__main__':
     app.run()

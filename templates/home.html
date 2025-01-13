@@ -10,6 +10,13 @@
 
   <p>This is a template.</p>
   
-  <a href="#">review</a>
-
+  
+  {% for doc in documents %}
+        <li><a href="{{ url_for('view_document', document_id=doc._id) }}">{{ doc.title }}</a></li>
+    {% endfor %}
+    </ul>
+    <a href="{{ url_for('create_document') }}">Create New Document</a>
+	
+  <!--https://www.perplexity.ai/search/h1-home-h1-p-this-is-a-templat-JYj3XP9CRr6J5YAHpBNNsQ --->
+  
 {% endblock %}
