@@ -1,19 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create Document</title>
-</head>
-<body>
-    <h1>{{ document.title }}</h1>
-    <p>{{ document.content }}</p>
-    <a href="{{ url_for('index') }}">Back to Index</a>
-	<h1>Create New Document</h1>
-    <form method="POST">
-        <input type="text" name="title" placeholder="Title" required><br>
-        <textarea name="content" placeholder="Content" required></textarea><br>
-        <input type="submit" value="Create">
-    </form>
-    <a href="{{ url_for('index') }}">Back to Index</a>
-</body>
-</html>
-     
+{% extends "layout.html" %}
+
+{% set active_page = "home" %}
+
+{% block title %}{% if document %}View Document{% else %}Create Document{% endif %}{% endblock %}
+
+{% block content %}
+
+  {% if document %}
+        <h1>{{ document.title }}</h1>
+        <p>{{ document.content }}</p>
+    {% else %}
+        <h1>hey</h1>
+        <form method="POST">
+            <input type="text" name="title" placeholder="Title" required><br>
+            <textarea name="content" placeholder="Content" required></textarea><br>
+            <input type="submit" value="Create">
+        </form>
+    {% endif %}
+    <a href="{{ url_for('home') }}">Back to Home</a>
+	<!--- https://www.perplexity.ai/search/traceback-most-recent-call-las-eCBoIlVPTfqYzChkWOZfTQ help for html-->
+  
+{% endblock %}

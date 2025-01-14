@@ -41,10 +41,11 @@ client = pymongo.MongoClient(connection_string)
 db_name = os.environ["MONGO_DBNAME"]
 
 db = client[db_name]
-collection = db['Organizations']
+collection1 = db['Santa Barbara Public Library']
+collection1 = db['Unity Shoppe']
 
-print(collection.find())
-for Colors in collection.find():
+print(collection1.find())
+for Colors in collection1.find():
         print(Colors)
 # List all databases to test connection
 
@@ -64,10 +65,6 @@ except Exception as e:
 def inject_logged_in():
     return {"logged_in":('github_token' in session)}
 
-@app.route('/')
-def home():
-    documents = list(collection.find())
-    return render_template('home.html')
 
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')
@@ -111,23 +108,30 @@ def renderPage2():
     return render_template('page2.html')
 
 
+    
+@app.route('/')
+def home():
+    documents = list(collection1.find())
+    return render_template('home.html')
+
 @app.route('/document/<document_id>')
 def view_document(document_id):
-    # Fetch a specific document by its ID
-    document = collection.find_one({'_id': document_id})
-    return render_template('create_documentdocument.html', document=document)
+    document = collection1.find_one({'_id': document_id})
+    return render_template('create_document.html', document=document)
+
 
 @app.route('/create', methods=['GET', 'POST'])
 def create_document():
     if request.method == 'POST':
-        # Create a new document from form data
         new_document = {
             'title': request.form['title'],
             'content': request.form['content']
         }
-        collection.insert_one(new_document)
-        return redirect(url_for('index'))
-    return render_template('create_document.html')
+        collection1.insert_one(new_document)
+        return redirect(url_for('home'))
+    return render_template('create_document.html', document=None)
+
+
 
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
