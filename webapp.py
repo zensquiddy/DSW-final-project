@@ -42,11 +42,15 @@ db_name = os.environ["MONGO_DBNAME"]
 
 db = client[db_name]
 collection1 = db['Santa Barbara Public Library']
-collection1 = db['Unity Shoppe']
+collection2 = db['Unity Shoppe']
 
-print(collection1.find())
+
 for Colors in collection1.find():
         print(Colors)
+
+for doc in collection1.find({"Name":"Santa Barbara Public Library"}):
+   print(doc)
+
 # List all databases to test connection
 
 
