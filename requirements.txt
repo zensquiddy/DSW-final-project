@@ -9,3 +9,8 @@ Flask-OAuthlib
 Flask-PyMongo
 pymongo
 Flask_APScheduler
+authlib==1.2.0
+python-dotenv==1.0.0
+google-auth==2.23.0
+google-auth-oauthlib==1.2.0
+google-api-python-client==2.108.0

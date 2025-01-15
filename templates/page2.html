@@ -1,13 +1,26 @@
 {% extends "layout.html" %}
 
-{% set active_page = "page2" %}
+{% set active_page = "Map" %}
 
-{% block title %}page2{% endblock %}
+{% block title %}Map{% endblock %}
 
 {% block content %}
 
-  <h1>This is Page 2</h1>
+  <h1>This is the Map place</h1>
 
-  <p>Lorem ipsum</p>
-
+  
+<img src="/static/SBMAP.jpg" alt="SBMAP" usemap="#workmap"> 
+	
+<map name="workmap">
+  <area shape="Circle" coords="817, 362 , 7" alt="SB Public Library" href="/SBPL">
+  <area shape="Circle" coords="793 , 362 , 7" alt="UnityShoppe" href="/UnityS">
+  <area shape="Circle" coords="778 , 379 , 7" alt="WestSideBoys&GirlsClub" href="/WSBG">
+  <area shape="Circle" coords="919 , 377 , 7" alt="Santa Barbara Zoo" href="/SBZ">
+  <area shape="Circle" coords="875 , 346 , 7" alt="Franklin Neighborhood Center" href="/FNC">
+  <area shape="Circle" coords="1385 , 486 , 7" alt="Carpinteria Seal Watch" href="/CSW">
+  <area shape="Circle" coords="450 , 311 , 7" alt="Cold Noses, Warm Hearts" href="/CNWH">
+  <area shape="Circle" coords="605 , 277 , 7" alt="Hearts Therapeutic Equestrian Center" href="/HTEC">
+</map>
+  
+  
 {% endblock %}
