@@ -1,3 +1,73 @@
+:root{
+	--base-color: white;
+	--base-variant: #e8e9ed;
+	--text-color: #111528;
+	--secondary-text: #232738;
+	--primary-color: #3a435d;
+	--accent-color: #0071ff;
+	
+}
+
+.d-block{
+	margin-left: auto;
+	margin-right: auto;
+	width: 10%;
+}
+
+.center{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 75%;
+}
+
+
+body {
+  background-color: var(--base-color);
+  color: var(--text-color);
+
+}
+
+
+.darkmode {
+	--base-color: #070b1d;
+	--base-variant: #101425;
+	--text-color: #ffffff;
+	--secondary-text: #a4a5b8;
+	--primary-color: #3a435d;
+	--accent-color: #30071ff;
+}
+
+#theme-switch{
+	height: 50px;
+	width: 50px;
+	padding: 0;
+	border-radius: 50%;
+	background-color: var(--base-variant);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 60px;
+	right: 10px;
+}
+
+#theme-switch svg{
+	fill: var(--primary-color);
+}
+
+#theme-switch svg:last-child{
+	display: none;
+}
+
+.darkmode #theme-switch svg:first-child{
+	display: none;
+}
+
+.darkmode #theme-switch svg:last-child{
+	display:block;
+}
+
 h1{
 	text-align: center;
 }
@@ -6,3 +76,27 @@ h1{
 p{
 	text-align: center;
 }
+
+.image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Main image styling */
+        img.main-image {
+            width: 500px;
+        }
+
+        /* Styling for the hover image */
+        #hover-image {
+            display: none;
+            position: absolute;
+            width: 100px;  /* Adjust the size of the hover image */
+            height: 100px;
+            pointer-events: none; /* Allow interaction with the underlying image */
+        }
+
+        /* Optional: Add a hover effect on the image map areas */
+        area {
+            cursor: pointer;
+        }
