@@ -99,42 +99,60 @@ def authorized():
     return render_template('message.html', message=message)
 
 
-@app.route('/page1')
-def renderPage1():
+@app.route('/Jobs')
+def renderJobs():
     if 'user_data' in session:
         user_data_pprint = pprint.pformat(session['user_data'])#format the user data nicely
     else:
         user_data_pprint = '';
     return render_template('page1.html',dump_user_data=user_data_pprint)
 
-@app.route('/page2')
-def renderPage2():
+@app.route('/Map')
+def renderMap():
     return render_template('page2.html')
-
-
     
-@app.route('/')
-def home():
-    documents = list(collection1.find())
-    return render_template('home.html')
+@app.route('/Info')
+def renderInfo():
+    return render_template('Info.html')
+
 
 @app.route('/document/<document_id>')
-def view_document(document_id):
-    document = collection1.find_one({'_id': document_id})
+def view_document():
+    for document in collection1.find():
+        document = collection1.find()
     return render_template('create_document.html', document=document)
 
 
 @app.route('/create', methods=['GET', 'POST'])
 def create_document():
+    document = view_document()
     if request.method == 'POST':
         new_document = {
+            #'username': request.form['googleaccount']
+            #'status' : request.form['status']
             'title': request.form['title'],
             'content': request.form['content']
         }
+        #if page = organization:
         collection1.insert_one(new_document)
+        #endif page = organization:
+        #collection2.insert_one(newdocument)
         return redirect(url_for('home'))
-    return render_template('create_document.html', document=None)
+    return render_template('create_document.html', document=document)
 
+print("Documents in Santa Barbara Public Library collection:")
+for doc in collection1.find():
+    print(doc)
+
+print("\nDocuments in Unity Shoppe collection:")
+for doc in collection2.find():
+    print(doc)
+
+@app.route('/')
+def home():
+    documents_collection1 = list(collection1.find())
+    documents_collection2 = list(collection2.find())
+    return render_template('create_document.html', documents1=documents_collection1, documents2=documents_collection2)
 
 
 #the tokengetter is automatically called to check who is logged in.

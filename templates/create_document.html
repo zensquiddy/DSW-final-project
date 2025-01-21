@@ -6,18 +6,28 @@
 
 {% block content %}
 
-  {% if document %}
-        <h1>{{ document.title }}</h1>
-        <p>{{ document.content }}</p>
-    {% else %}
-        <h1>hey</h1>
+        <h1>Santa Barbara Public Library Documents</h1>
+		{% for doc in documents1 %}
+        <div>
+            <h2>{{ doc.get('Name', 'No Name') }}</h2>
+            <p>{{ doc }}</p>
+        </div>
+		{% endfor %}
+
+		<h1>Unity Shoppe Documents</h1>
+		{% for doc in documents2 %}
+        <div>
+            <h2>{{ doc.get('Name', 'No Name') }}</h2>
+            <p>{{ doc }}</p>
+        </div>
+		{% endfor %}
         <form method="POST">
             <input type="text" name="title" placeholder="Title" required><br>
             <textarea name="content" placeholder="Content" required></textarea><br>
             <input type="submit" value="Create">
         </form>
-    {% endif %}
-    <a href="{{ url_for('home') }}">Back to Home</a>
+		<a href="{{ url_for('home') }}">Back to Home</a>
+	
 	<!--- https://www.perplexity.ai/search/traceback-most-recent-call-las-eCBoIlVPTfqYzChkWOZfTQ help for html-->
   
 {% endblock %}
