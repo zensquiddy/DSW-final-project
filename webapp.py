@@ -117,28 +117,31 @@ def renderInfo():
 
 
 @app.route('/document/<document_id>')
-def view_document():
-    for document in collection1.find():
-        document = collection1.find()
-    return render_template('create_document.html', document=document)
+def view_document(document_id):
+    document = collection1.find_one({'_id': ObjectId(document_id)})
+    if not document:
+        document = collection2.find_one({'_id': ObjectId(document_id)})
+    if not document:
+        flash('Document not found', 'error')
+        return redirect(url_for('home'))
+    return render_template('view_document.html', document=document)
 
 
 @app.route('/create', methods=['GET', 'POST'])
 def create_document():
-    document = view_document()
     if request.method == 'POST':
         new_document = {
-            #'username': request.form['googleaccount']
-            #'status' : request.form['status']
             'title': request.form['title'],
-            'content': request.form['content']
+            'content': request.form['content'],
+            'collection': request.form['collection']
         }
-        #if page = organization:
-        collection1.insert_one(new_document)
-        #endif page = organization:
-        #collection2.insert_one(newdocument)
+        if new_document['collection'] == 'santa_barbara_library':
+            collection1.insert_one(new_document)
+        elif new_document['collection'] == 'unity_shoppe':
+            collection2.insert_one(new_document)
+        flash('Document created successfully', 'success')
         return redirect(url_for('home'))
-    return render_template('create_document.html', document=document)
+    return render_template('create_document.html')
 
 print("Documents in Santa Barbara Public Library collection:")
 for doc in collection1.find():
@@ -147,12 +150,21 @@ for doc in collection1.find():
 print("\nDocuments in Unity Shoppe collection:")
 for doc in collection2.find():
     print(doc)
+    
+
+@app.route('/santa_barbara_library')
+def santa_barbara_library():
+    documents = collection1.find()
+    return render_template('documents.html', documents=documents, title="Santa Barbara Public Library")
+
+@app.route('/unity_shoppe')
+def unity_shoppe():
+    documents = collection2.find()
+    return render_template('documents.html', documents=documents, title="Unity Shoppe")
 
 @app.route('/')
 def home():
-    documents_collection1 = list(collection1.find())
-    documents_collection2 = list(collection2.find())
-    return render_template('create_document.html', documents1=documents_collection1, documents2=documents_collection2)
+    return render_template('home.html')
 
 
 #the tokengetter is automatically called to check who is logged in.
@@ -162,3 +174,5 @@ def get_github_oauth_token():
 
 if __name__ == '__main__':
     app.run()
+
+#https://www.perplexity.ai/search/127-0-0-1-21-jan-2025-13-20-12-lAALaZgYSYOiURpy1jaPgQ

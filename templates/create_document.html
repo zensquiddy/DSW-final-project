@@ -1,33 +1,22 @@
 {% extends "layout.html" %}
 
-{% set active_page = "home" %}
+{% set active_page = "create_document" %}
 
-{% block title %}{% if document %}View Document{% else %}Create Document{% endif %}{% endblock %}
+{% block title %}Create Document{% endblock %}
 
 {% block content %}
-
-        <h1>Santa Barbara Public Library Documents</h1>
-		{% for doc in documents1 %}
-        <div>
-            <h2>{{ doc.get('Name', 'No Name') }}</h2>
-            <p>{{ doc }}</p>
-        </div>
-		{% endfor %}
-
-		<h1>Unity Shoppe Documents</h1>
-		{% for doc in documents2 %}
-        <div>
-            <h2>{{ doc.get('Name', 'No Name') }}</h2>
-            <p>{{ doc }}</p>
-        </div>
-		{% endfor %}
-        <form method="POST">
-            <input type="text" name="title" placeholder="Title" required><br>
-            <textarea name="content" placeholder="Content" required></textarea><br>
-            <input type="submit" value="Create">
-        </form>
-		<a href="{{ url_for('home') }}">Back to Home</a>
-	
-	<!--- https://www.perplexity.ai/search/traceback-most-recent-call-las-eCBoIlVPTfqYzChkWOZfTQ help for html-->
-  
+  <h1>Create a New Document</h1>
+  <form action="{{ url_for('create_document') }}" method="post">
+    <label for="title">Title:</label><br>
+    <input type="text" id="title" name="title" required><br>
+    <label for="content">Content:</label><br>
+    <textarea id="content" name="content" required></textarea><br>
+    <label for="collection">Collection:</label><br>
+    <select id="collection" name="collection" required>
+      <option value="santa_barbara_library">Santa Barbara Public Library</option>
+      <option value="unity_shoppe">Unity Shoppe</option>
+    </select><br>
+    <input type="submit" value="Submit">
+  </form>
+  <a href="{{ url_for('home') }}">Back to Home</a>
 {% endblock %}
