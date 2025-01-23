@@ -5,9 +5,14 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-
   <h1>Home</h1>
-
-  <p>This is a template.</p>
-
+  <p>Select a collection to view documents:</p>
+  <ul>
+    <li><a href="{{ url_for('santa_barbara_library') }}">Santa Barbara Public Library</a></li>
+    <li><a href="{{ url_for('unity_shoppe') }}">Unity Shoppe</a></li>
+  </ul>
+  <a href="{{ url_for('create_document') }}">Create New Document</a>
 {% endblock %}
+
+  <!--https://www.perplexity.ai/search/h1-home-h1-p-this-is-a-templat-JYj3XP9CRr6J5YAHpBNNsQ 
+  https://www.perplexity.ai/search/127-0-0-1-21-jan-2025-13-20-12-lAALaZgYSYOiURpy1jaPgQ--->

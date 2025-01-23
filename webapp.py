@@ -2,9 +2,6 @@ from flask import Flask, redirect, url_for, session, request, jsonify, render_te
 from markupsafe import Markup
 from flask_apscheduler import APScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
-Add Headings (Format > Paragraph styles) and they will appear in your table of contents.
-
-Add Headings (Format > Paragraph styles) and they will appear in your table of contents.
 from flask_oauthlib.client import OAuth
 from bson.objectid import ObjectId
 from dotenv import load_dotenv

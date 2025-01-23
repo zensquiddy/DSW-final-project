@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% set active_page = "documents" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+  <ul>
+  {% for doc in documents %}
+    <li><a href="{{ url_for('view_document', document_id=doc._id) }}">{{ doc.title }}</a></li>
+  {% endfor %}
+  </ul>
+  <a href="{{ url_for('create_document') }}">Create New Document</a>
+  <a href="{{ url_for('home') }}">Back to Home</a>
+{% endblock %}
