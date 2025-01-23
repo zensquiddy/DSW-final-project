@@ -14,8 +14,8 @@
         const mainImage = document.querySelector('.main-image').getBoundingClientRect();
 
         // Adjust hover image position so it's over the main image
-        hoverImage.style.top = `${rect.top - mainImage.top + window.scrollY}px`; // Adjust position if needed
-        hoverImage.style.left = `${rect.left - mainImage.left + window.scrollX}px`; // Adjust position if needed
+        hoverImage.style.left = '640px';  // X-coordinate (adjust as needed)
+        hoverImage.style.top = '274px';   // Y-coordinate (adjust as needed)
     }
 
     // JavaScript function to hide the hover image when mouse leaves the area

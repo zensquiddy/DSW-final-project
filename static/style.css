@@ -1,10 +1,12 @@
+
 :root{
-	--base-color: white;
+	--base-color: rgb(240, 242, 227);
 	--base-variant: #e8e9ed;
 	--text-color: #111528;
 	--secondary-text: #232738;
 	--primary-color: #3a435d;
 	--accent-color: #0071ff;
+	--a: #111528;
 	
 }
 
@@ -36,6 +38,7 @@ body {
 	--secondary-text: #a4a5b8;
 	--primary-color: #3a435d;
 	--accent-color: #30071ff;
+	--a: #ffffff;
 }
 
 #theme-switch{
@@ -88,15 +91,24 @@ p{
         }
 
         /* Styling for the hover image */
-        #hover-image {
-            display: none;
-            position: absolute;
-            width: 100px;  /* Adjust the size of the hover image */
-            height: 100px;
-            pointer-events: none; /* Allow interaction with the underlying image */
-        }
+        .center {
+  position: relative;
+}
+
+#hover-image {
+  display: none;
+  width: 100px; /* Adjust the size of the hover image */
+  height: 100px;
+  top: 50px;
+  right: 50px;
+  pointer-events: none; /* Allow interaction with the underlying image */
+}
+
 
         /* Optional: Add a hover effect on the image map areas */
         area {
             cursor: pointer;
         }
+h4{
+	color; black:
+}

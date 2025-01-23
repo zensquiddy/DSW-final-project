@@ -40,7 +40,7 @@ google = oauth.register(
     CLIENT_SECRET = os.environ.get('CLIENT_SECRET'),
     scopes = ['your_scopes_here'],
     flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, scopes=['your_scopes_here']),
-    client_id=os.environ['GOOGLE_CLIENT_ID'],  # Your Google Client ID
+    client_id=os.environ['GOOGLE_CLIENT_ID'],  # c Your Google Client ID
     client_secret=os.environ['GOOGLE_CLIENT_SECRET'],  # Your Google Client Secret
     access_token_url='https://accounts.google.com/o/oauth2/token',
     AUTH_URL = 'https://accounts.google.com/o/oauth2/auth',
@@ -62,6 +62,11 @@ try:
     print("Pinged your deployment. You successfully connected to MongoDB!")
 except Exception as e:
     print(e)
+
+
+#context processors run before templates are rendered and add variable(s) to the template's context
+#context processors must return a dictionary 
+#this context processor adds the variable logged_in to the conext for all template
 
 @app.context_processor
 def inject_logged_in():
@@ -189,4 +194,3 @@ def renderHTEC():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
