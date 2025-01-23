@@ -5,11 +5,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from authlib.integrations.flask_client import OAuth
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 
 import os.path
 import pprint
@@ -35,21 +30,21 @@ CLIENT_SECRET_FILE = os.path.join(os.path.dirname(__file__), 'client_secret.json
 
 
 # Set up Google as OAuth provider
-google = oauth.register(
-    name='google',
-    CLIENT_SECRET = os.environ.get('CLIENT_SECRET'),
-    scopes = ['your_scopes_here'],
-    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, scopes=['your_scopes_here']),
-    client_id=os.environ['GOOGLE_CLIENT_ID'],  # Your Google Client ID
-    client_secret=os.environ['GOOGLE_CLIENT_SECRET'],  # Your Google Client Secret
-    access_token_url='https://accounts.google.com/o/oauth2/token',
-    AUTH_URL = 'https://accounts.google.com/o/oauth2/auth',
-    api_base_url='https://www.googleapis.com/oauth2/v1/',
-    client_kwargs={
-        'scope': 'openid email profile',
-    }
+oauth.register(
+    name='github',
+    client_id=os.environ['GITHUB_CLIENT_ID'],
+    client_secret=os.environ['GITHUB_CLIENT_SECRET'],
+    access_token_url='https://github.com/login/oauth/access_token',
+    access_token_params=None,
+    authorize_url='https://github.com/login/oauth/authorize',
+    authorize_params=None,
+    api_base_url='https://api.github.com/',
+    client_kwargs={'scope': 'user:email'},
 )
 
+# https://www.perplexity.ai/search/error-traceback-most-recent-ca-k2rRbvIcTViNSHBWFV2i_w
+
+#https://www.perplexity.ai/search/127-0-0-1-21-jan-2025-13-20-12-lAALaZgYSYOiURpy1jaPgQS
 # Connect to database
 url = os.environ["MONGO_CONNECTION_STRING"]
 client = pymongo.MongoClient(url)
@@ -63,64 +58,49 @@ try:
 except Exception as e:
     print(e)
 
-<<<<<<< HEAD
+
 #context processors run before templates are rendered and add variable(s) to the template's context
 #context processors must return a dictionary 
 #this context processor adds the variable logged_in to the conext for all template
-=======
->>>>>>> 69087644bcbff02fc8496d2c47af0e87689f782e
+
 @app.context_processor
 def inject_logged_in():
-    return {"logged_in": ('google_token' in session)}
+    return {"logged_in": ('github_token' in session)}
+
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
-# Redirect to Google's OAuth page and confirm callback URL
+# Redirect to OAuth page and confirm callback URL
 @app.route('/login')
 def login():
-    # Create the OAuth flow object
-    flow = InstalledAppFlow.from_client_secrets_file(
-        CLIENT_SECRET_FILE, scopes=SCOPES)
-    flow.redirect_uri = url_for('callback', _external=True, _scheme='http')
-    authorization_url, state = flow.authorization_url(
-        access_type='offline',
-        prompt='select_account')
+    github = oauth.create_client('github')
+    redirect_uri = url_for('callback', _external=True)
+    return github.authorize_redirect(redirect_uri)
 
-    # Save the state so we can verify the request later
-    session['state'] = state
 
-    return redirect(authorization_url)
 
 
 
 @app.route('/callback')
 def callback():
-    # Verify the request state
-    if request.args.get('state') != session['state']:
-        raise Exception('Invalid state')
+    token = oauth.github.authorize_access_token()
+    resp = oauth.github.get('user', token=token)
+    user_info = resp.json()
+    # Do something with the token and profile
+    session['github_token'] = token
+    session['user_data'] = user_info
+    return redirect(url_for('home'))
 
-    # Create the OAuth flow object
-    flow = InstalledAppFlow.from_client_secrets_file(
-        CLIENT_SECRET_FILE, scopes=SCOPES, state=session['state'])
-    flow.redirect_uri = url_for('callback', _external=True)
-
-    # Exchange the authorization code for an access token
-    authorization_response = request.url
-    flow.fetch_token(authorization_response=authorization_response)
-
-    # Save the credentials to the session
-    credentials = flow.credentials
-    session['credentials'] = credentials_to_dict(credentials)
-
-    return redirect(url_for('index'))
 
 
 @app.route('/logout')
 def logout():
-    session.clear()
-    return redirect(url_for('index'))
+    session.pop('github_token', None)
+    session.pop('user_data', None)
+    return redirect(url_for('home'))
+
 
 @app.route('/login/authorized')
 def authorized():
