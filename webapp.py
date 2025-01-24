@@ -27,7 +27,8 @@ if not uri:
     raise ValueError("MONGO_CONNECTION_STRING environment variable not set")
 
 # Initialize MongoClient with SSL settings
-client = MongoClient(uri, ssl=True, ssl_cert_reqs=ssl.CERT_NONE)
+client = MongoClient(uri, ssl=True)
+
 
 app.secret_key = os.environ['SECRET_KEY']  # Used to sign session cookies
 
