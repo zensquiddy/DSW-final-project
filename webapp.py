@@ -21,8 +21,8 @@ app.debug = False #Change this to False for production
 #os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1' #Remove once done debugging
 
 
-client = MongoClient(
-    "mongodb+srv://<username>:<password>@cluster0.mongodb.net/test?retryWrites=true&w=majority",
+client = MongoClient(uri)(
+    uri = "mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority"
     ssl=True,
     ssl_cert_reqs=ssl.CERT_NONE
 )
