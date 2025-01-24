@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 
-{% set active_page = "Jobs" %}
+{% set active_page = "Listings" %}
 
-{% block title %}Jobs{% endblock %}
+{% block title %}Listings{% endblock %}
 
 {% block content %}
-  <h1>This is Jobs</h1>
+  <h1>These are the Listings</h1>
 
 <div class="row" class="card" style="width:400px">
   <img class="card-img-top" src="/static/OutE.webp" alt="Card image">
@@ -13,7 +13,7 @@
     <h4 class="card-title">Santa Barbara Public Library</h4>
     <p class="card-text">Help orginize books and movies!</p>
     <a href="/SBPL" class="btn btn-primary">See Description</a>
-	<a href="/CSW" class="btn btn-primary">See Reviews</a>
+	<a href="{{ url_for('santa_barbara_library') }}" class="btn btn-primary">See Reviews</a>
 	</div>
   </div>
 </div>
