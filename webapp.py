@@ -21,33 +21,37 @@ app.debug = False #Change this to False for production
 #os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1' #Remove once done debugging
 
 
-uri = "mongodb+srv://zensquiddy:COfx584HqxJunYXF@clutser1.4nvbh.mongodb.net/?retryWrites=true&w=majority&appName=Clutser1"
+uri = os.getenv("MONGO_CONNECTION_STRING")
 
-client = MongoClient(uri)(
-    ssl=True,
-    ssl_cert_reqs=ssl.CERT_NONE
-)
-app.secret_key = os.environ['SECRET_KEY'] #used to sign session cookies
+if not uri:
+    raise ValueError("MONGO_CONNECTION_STRING environment variable not set")
+
+# Initialize MongoClient with SSL settings
+client = MongoClient(uri, ssl=True, ssl_cert_reqs=ssl.CERT_NONE)
+
+app.secret_key = os.environ['SECRET_KEY']  # Used to sign session cookies
+
 oauth = OAuth(app)
-oauth.init_app(app) #initialize the app to be able to make requests for user information
+oauth.init_app(app)  # Initialize the app to make requests for user information
 
-#Set up GitHub as OAuth provider
+# Set up GitHub as OAuth provider
 github = oauth.remote_app(
     'github',
-    consumer_key=os.environ['GITHUB_CLIENT_ID'], #your web app's "username" for github's OAuth
-    consumer_secret=os.environ['GITHUB_CLIENT_SECRET'],#your web app's "password" for github's OAuth
-    request_token_params={'scope': 'user:email'}, #request read-only access to the user's email.  For a list of possible scopes, see developer.github.com/apps/building-oauth-apps/scopes-for-oauth-apps
+    consumer_key=os.environ['GITHUB_CLIENT_ID'],  # Your web app's "username" for GitHub's OAuth
+    consumer_secret=os.environ['GITHUB_CLIENT_SECRET'],  # Your web app's "password" for GitHub's OAuth
+    request_token_params={'scope': 'user:email'},  # Request read-only access to the user's email
     base_url='https://api.github.com/',
     request_token_url=None,
     access_token_method='POST',
     access_token_url='https://github.com/login/oauth/access_token',  
-    authorize_url='https://github.com/login/oauth/authorize' #URL for github's OAuth login
+    authorize_url='https://github.com/login/oauth/authorize'  # URL for GitHub's OAuth login
 )
 
-#Connect to database
-connection_string = os.environ.get("MONGO_CONNECTION_STRING")
-client = pymongo.MongoClient(connection_string)
-db_name = os.environ["MONGO_DBNAME"]
+# Connect to database
+db_name = os.environ.get("MONGO_DBNAME")
+
+if not db_name:
+    raise ValueError("MONGO_DBNAME environment variable not set")
 
 db = client[db_name]
 collection1 = db['Santa Barbara Public Library']
