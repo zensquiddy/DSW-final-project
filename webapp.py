@@ -22,7 +22,7 @@ app.debug = False #Change this to False for production
 
 
 client = MongoClient(uri)(
-    uri = "mongodb+srv://zensquiddy:COfx584HqxJunYXF@clutser1.4nvbh.mongodb.net/?retryWrites=true&w=majority&appName=Clutser1"
+    uri = "mongodb+srv://zensquiddy:COfx584HqxJunYXF@clutser1.4nvbh.mongodb.net/?retryWrites=true&w=majority&appName=Clutser1",
     ssl=True,
     ssl_cert_reqs=ssl.CERT_NONE
 )
