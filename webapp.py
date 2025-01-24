@@ -166,8 +166,40 @@ def unity_shoppe():
 @app.route('/')
 def home():
     return render_template('home.html')
+    
+@app.route('/SBPL')
+def SBPL():
+    return render_template('SBPL.html')
+    
+@app.route('/UnityS')
+def UnityS():
+    return render_template('UnityS.html')
+
+@app.route('/CNWH')
+def CNWH():
+    return render_template('CNWH.html')
+    
+@app.route('/WSBG')
+def WSBG():
+    return render_template('WSBG.html')
+    
+    
+@app.route('/CSW')
+def CSW():
+    return render_template('CSW.html')
+
+@app.route('/HTEC')
+def HTEC():
+    return render_template('HTEC.html')
 
 
+@app.route('/SBZ')
+def SBZ():
+    return render_template('SBZ.html')
+    
+@app.route('/FNC')
+def FNC():
+    return render_template('FNC.html')
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
 def get_github_oauth_token():
