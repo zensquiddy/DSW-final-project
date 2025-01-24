@@ -11,6 +11,7 @@ import os
 import time
 import pymongo
 import sys
+import ssl
  
 app = Flask(__name__)
 load_dotenv()
@@ -19,6 +20,11 @@ app.debug = False #Change this to False for production
 #os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1' #Remove once done debugging
 
 
+client = MongoClient(
+    "mongodb+srv://<username>:<password>@cluster0.mongodb.net/test?retryWrites=true&w=majority",
+    ssl=True,
+    ssl_cert_reqs=ssl.CERT_NONE
+)
 app.secret_key = os.environ['SECRET_KEY'] #used to sign session cookies
 oauth = OAuth(app)
 oauth.init_app(app) #initialize the app to be able to make requests for user information
